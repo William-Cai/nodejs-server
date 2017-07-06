@@ -9,11 +9,12 @@
 <!--<button onclick="start()">启动</button>
 <button onclick="stop()">停止</button>-->
 <p>WebSocket</p>
-<form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
-    <div class="form-group">
-        <input class="form-control" type="text" name="message" id="message"
-               placeholder="Type text to echo in here" value=""/>
-    </div>
+<form onsubmit="sendMessage(); return false;">
+    <input type="text" name="nickname" id="nickname" placeholder="请输入昵称" value=""/>
+    <br/>
+    <input type="text" name="message" id="message"
+           placeholder="请输入要发送的消息" value=""/>
+    <br/>
     <button type="button" id="send" class="btn btn-primary"
             onclick="sendMessage();">
         Send!
@@ -51,7 +52,21 @@
 
     //发送消息
     function sendMessage() {
-        ws.send(document.getElementById('message').value);
+        var msg = document.getElementById('message').value;
+        var nickname = document.getElementById('nickname').value;
+        if (nickname == "") {
+            alert("请设置你的昵称");
+        }
+        if (msg != "") {
+            ws.send(JSON.stringify({
+                nickname: nickname,
+                msg: msg
+            }));
+            document.getElementById('message').value = "";
+        } else {
+            alert("请输入你要发送的消息");
+        }
+
     }
 
     //启动

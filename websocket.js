@@ -43,15 +43,18 @@ var WebSocketServer = require('ws').Server
     , wss = new WebSocketServer({port: 8080});
 
 wss.on('connection', function (ws) {
-    ws.on('message', function (message) {
-        console.log('received: %s', message);
+    ws.on('message', function (jsonStr) {
+        //保存数据
+        var user = this.user = JSON.parse(jsonStr);
+
         //遍历所有客户端，发送全局消息
         wss.clients.forEach(function each(client) {
-            client.send(JSON.stringify("某某某 Say:" + message));
+            client.send(JSON.stringify(user.nickname + ": " + user.msg));
         });
     });
     ws.on('close', function (close) {
         console.log('剩余数量：' + wss.clients.size);
     });
+    console.log("当前总数量:" + wss.clients.size);
     ws.send(JSON.stringify('Connection Success. Count:' + wss.clients.size));
 });
