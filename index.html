@@ -13,37 +13,37 @@
 <script>
     var es;
     function start() {
-        //es = new EventSource("/sse");
+//        es = new EventSource("/sse");
         es = new EventSource("/sse_1"); //自定义事件
 
         //只要和服务器连接，就会触发open事件
-        es.addEventListener("open",function(){
+        es.addEventListener("open", function () {
             console.log("和服务器建立连接");
         });
 
         //处理服务器响应报文中的diy事件
-        es.addEventListener("diy",function(e){
+        es.addEventListener("diy", function (e) {
             console.log("服务器发送给客户端的数据为:" + e.data);
             handler(e);
         });
 
         //如果服务器响应报文中没有指明事件，默认触发message事件
-        es.addEventListener("message",function(e){
+        es.addEventListener("message", function (e) {
             console.log("服务器发送给客户端的数据为:" + e.data);
             handler(e)
         });
 
         //发生错误，则会触发error事件
-        es.addEventListener("error",function(e){
+        es.addEventListener("error", function (e) {
             console.log("服务器发送给客户端的数据为:" + e.data);
         });
     }
 
     //处理事件
-    function handler(e){
+    function handler(e) {
         document.getElementById("sse").innerHTML += "<li>" + new Date(+e.data) + "</li>";
     }
-    
+
     function stop() {
         document.getElementById("sse").innerHTML = "";
         es.close();
@@ -53,4 +53,4 @@
 </script>
 </body>
 
-</html
+</html>

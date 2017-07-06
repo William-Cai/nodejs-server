@@ -60,8 +60,9 @@ var server = http.createServer(function (request, response) {
                 setInterval(function () {
                     var data = Date.now();
                     console.log("推送自定义事件...次数:" + count++);
-                    response.write("event:diy\r\n");//自定义事件
+                    response.write("event:diy\r");//自定义事件
                     response.write("data:" + data + "\n\n"); //以data: 开始，以 \n\n 结尾
+                    response.write("id:"+Math.floor(Math.random()*10)+"\n"); //id
                 }, 3000);
                 break;
             default:
