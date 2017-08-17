@@ -23,7 +23,7 @@
 
         //处理服务器响应报文中的diy事件
         es.addEventListener("diy", function (e) {
-            console.log("服务器发送给客户端的数据为:" + e.data);
+            console.log("服务器发送给客户端的数据为【diy事件】:" + e.data);
             handler(e);
         });
 
